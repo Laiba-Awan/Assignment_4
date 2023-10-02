@@ -22,6 +22,7 @@ function addTodo() {
   } else {
     validator.textContent = "Write Something!";
   }
+  saveData();
 }
 
 // ENTER KEY PRESS FUNCTION---
@@ -35,6 +36,7 @@ input.addEventListener("keypress", function (e) {
 function removeTodo(item) {
   console.log(item.parentNode.parentNode);
   item.parentNode.parentNode.remove();
+  saveData();
 }
 
 // DELETE ALL BUTTON FUNCTION-----
@@ -44,6 +46,7 @@ function deleteAll() {
   } else {
     list.innerHTML = "";
   }
+  saveData();
 }
 
 // EDIT BUTTON FUNCTION------
@@ -63,4 +66,18 @@ function editTodo(object) {
     input.value = todoName;
     object.parentElement.replaceChild(input, object.previousElementSibling);
   }
+  saveData();
+}
+
+// LOCALSTORAGE DATA SAVE FUNCTION-------
+function saveData() {
+  console.log("list.innerHTML", list.innerHTML);
+  const allTodos = JSON.stringify(list.innerHTML);
+  localStorage.setItem("appData", allTodos);
+}
+
+// ONLOAD FUNCTION-----
+function onReload() {
+  const myData = JSON.parse(localStorage.getItem("appData"));
+  list.innerHTML = myData;
 }
